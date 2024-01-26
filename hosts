@@ -17,6 +17,9 @@
 
 # Ex 2: A collection of hosts belonging to the 'webservers' group
 
+[phobos]
+172.27.16.44
+
 [master]
 10.207.0.20
 

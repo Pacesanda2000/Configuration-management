@@ -18,12 +18,11 @@
 # Ex 2: A collection of hosts belonging to the 'webservers' group
 
 [master]
-10.207.0.155
+10.207.0.20
 
 [worker]
-10.207.0.156
-10.207.0.157
-10.207.0.154
+10.207.0.16
+10.207.0.10
 
 [all_nodes:children]
 master

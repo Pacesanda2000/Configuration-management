@@ -7,14 +7,14 @@ variables:
 before_script:
   - sudo yum update -y
   - sudo yum install -y ansible
-  - cat "$ANSIBLE_LOCAL_PATH/hosts"
-  - sudo chmod 777 "$ANSIBLE_LOCAL_PATH/hosts"
+  - cat "$ANSIBLE_LOCAL_PATH/hosts.txt"
+  - sudo chmod 777 "$ANSIBLE_LOCAL_PATH/hosts.txt"
 
 ping_nodes:
   stage: test
   image: registry.gitlab.com/torese/docker-ansible
   script:
     - export ANSIBLE_CONFIG="$ANSIBLE_LOCAL_PATH/ansible.cfg"
-    - export ANSIBLE_HOSTS="$ANSIBLE_LOCAL_PATH/hosts"
+    - export ANSIBLE_HOSTS="$ANSIBLE_LOCAL_PATH/hosts.txt"
     - ansible --version
-    - ansible all_nodes -i "$ANSIBLE_LOCAL_PATH/hosts" -m ping
+    - ansible all_nodes -i "$ANSIBLE_LOCAL_PATH/hosts.txt" -m ping

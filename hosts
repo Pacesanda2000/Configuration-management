@@ -31,9 +31,9 @@
 master
 worker
 
-[all_nodes:vars]
-ansible_user=student
-ansible_password=Start123
+[phobos:vars]
+ansible_user=dmajoros
+ansible_password=Pacesanda2000.
 
 # If you have multiple hosts following a pattern you can specify
 # them like this:

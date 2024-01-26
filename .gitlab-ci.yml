@@ -1,0 +1,13 @@
+stages:
+  - test
+
+variables:
+  ANSIBLE_LOCAL_PATH: /home/gitlab-runner/builds/zvN3A5z1/0/dualedu/2022-2023/sis/dmajoros/ansible/
+
+ping_nodes:
+  stage: test
+  image: registry.gitlab.com/torese/docker-ansible
+  script:
+    - export ANSIBLE_CONFIG="$ANSIBLE_LOCAL_PATH/ansible.cfg"
+    - ansible --version
+    - ansible all-nodes -i "$ANSIBLE_LOCAL_PATH/hosts" -m ping

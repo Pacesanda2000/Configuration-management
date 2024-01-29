@@ -17,9 +17,6 @@
 
 # Ex 2: A collection of hosts belonging to the 'webservers' group
 
-[phobos]
-vlab.dual.edu
-
 [master]
 10.207.0.20
 
@@ -31,9 +28,9 @@ vlab.dual.edu
 master
 worker
 
-[phobos:vars]
-ansible_user=dmajoros
-ansible_password=Pacesanda2000.
+[all_nodes:vars]
+ansible_user=student
+ansible_password=Start123
 
 # If you have multiple hosts following a pattern you can specify
 # them like this:

@@ -17,4 +17,4 @@ ping_nodes:
     - export ANSIBLE_CONFIG="$ANSIBLE_LOCAL_PATH/ansible.cfg"
     - export ANSIBLE_HOSTS="$ANSIBLE_LOCAL_PATH/hosts"
     - ansible --version
-    - ansible phobos -i "$ANSIBLE_LOCAL_PATH/hosts" -m ping
+    - ansible all_nodes -i "$ANSIBLE_LOCAL_PATH/hosts" -m ping

@@ -5,8 +5,8 @@ variables:
   ANSIBLE_LOCAL_PATH: /home/gitlab-runner/builds/zvN3A5z1/0/dualedu/2022-2023/sis/dmajoros/ansible
 
 before_script:
-  - sudo yum update -y
-  - sudo yum install -y ansible
+  - yum update -y
+  - yum install -y ansible
   #- cat "$ANSIBLE_LOCAL_PATH/hosts"
   #- sudo chmod 777 "$ANSIBLE_LOCAL_PATH/hosts"
 

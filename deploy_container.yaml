@@ -1,7 +1,7 @@
 ---
   - name: Deploy Container
     hosts: worker  
-    become: yes
+    become_user: root
 
     tasks:
       - name: Pull Docker image

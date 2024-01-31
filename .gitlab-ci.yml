@@ -10,10 +10,6 @@ before_script:
   - sudo yum update -y
   - sudo yum install -y ansible
   - ansible --version
-  #- export ANSIBLE_CONFIG="$ANSIBLE_LOCAL_PATH/ansible.cfg"
-  #- export ANSIBLE_HOSTS="$ANSIBLE_LOCAL_PATH/hosts"
-  - pwd
-  - ls -la
 
 
 ping-nodes:
@@ -23,6 +19,7 @@ ping-nodes:
   script:
     - ansible all_nodes -i "$ANSIBLE_LOCAL_PATH/hosts" -m ping
 
+
 docker-install:
   stage: build
   tags:
@@ -30,12 +27,12 @@ docker-install:
   script:
     - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" install_docker.yaml
 
-#container-deployment:
- # stage: deploy
- # tags:
- #   - dualedu-docker
- # script:
- #   - ansible all_nodes -i  "$ANSIBLE_LOCAL_PATH" deploy_container.yaml
+container-deployment:
+  stage: deploy
+  tags:
+    - dualedu-docker
+  script:
+    - ansible-playbook -i  "$ANSIBLE_LOCAL_PATH/hosts" deploy_container.yaml
 
 
   

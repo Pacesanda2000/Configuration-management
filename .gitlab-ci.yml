@@ -5,12 +5,27 @@ variables:
   ANSIBLE_LOCAL_PATH: /home/gitlab-runner/builds/zvN3A5z1/0/dualedu/2022-2023/sis/dmajoros/ansible
 
 before_script:
-   - sudo apt-get update
-   - sudo apt-get install -y ansible
+   #- sudo apt-get update
+   #- sudo apt-get install -y ansible
   #- sudo yum update -y
   #- sudo yum install -y ansible
   #- cat "$ANSIBLE_LOCAL_PATH/hosts"
   #- sudo chmod 777 "$ANSIBLE_LOCAL_PATH/hosts"
+    - sudo apt-get update
+    - sudo apt-get install -y gnupg2
+
+    # Import HashiCorp GPG key
+    - curl -fsSL https://apt.releases.hashicorp.com/gpg | gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+
+    # Add HashiCorp repository with the imported GPG key
+    - echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com focal main" | sudo tee /etc/apt/sources.list.d/hashicorp.list > /dev/null
+
+    # Update package lists after adding the repository
+    - sudo apt-get update
+
+    # Install Ansible
+    - sudo apt-get install -y ansible
+
 
 ping_nodes:
   stage: test

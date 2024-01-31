@@ -1,5 +1,7 @@
 stages:
   - test
+  - build
+  - deploy
 
 variables:
   ANSIBLE_LOCAL_PATH: /home/gitlab-runner/builds/zvN3A5z1/0/dualedu/2022-2023/sis/dmajoros/ansible
@@ -7,17 +9,31 @@ variables:
 before_script:
   - sudo yum update -y
   - sudo yum install -y ansible
-  #- cat "$ANSIBLE_LOCAL_PATH/hosts"
+  - ansible --version
+  - export ANSIBLE_CONFIG="$ANSIBLE_LOCAL_PATH/ansible.cfg"
+  - export ANSIBLE_HOSTS="$ANSIBLE_LOCAL_PATH/hosts"
 
 
-ping_nodes:
+ping-nodes:
   stage: test
   tags: 
     - dualedu-docker
-  #image: registry.gitlab.com/torese/docker-ansible
   script:
-    - export ANSIBLE_CONFIG="$ANSIBLE_LOCAL_PATH/ansible.cfg"
-    - export ANSIBLE_HOSTS="$ANSIBLE_LOCAL_PATH/hosts"
-    - ansible --version
     - ansible all_nodes -i "$ANSIBLE_LOCAL_PATH/hosts" -m ping
+
+docker-install:
+  stage: build
+  tags:
+    - dualedu-docker
+  script:
+    - ansible all_nodes -i  "$ANSIBLE_LOCAL_PATH" install_docker.yaml
+
+#container-deployment:
+ # stage: deploy
+ # tags:
+ #   - dualedu-docker
+ # script:
+ #   - ansible all_nodes -i  "$ANSIBLE_LOCAL_PATH" deploy_container.yaml
+
+
   

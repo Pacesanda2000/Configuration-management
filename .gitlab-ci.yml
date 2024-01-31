@@ -28,7 +28,7 @@ docker-install:
   tags:
     - dualedu-docker
   script:
-    - ansible-playbook -i install_docker.yaml
+    - ansible-playbook install_docker.yaml
 
 #container-deployment:
  # stage: deploy

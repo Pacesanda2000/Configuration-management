@@ -26,6 +26,8 @@ docker-install:
     - dualedu-docker
   script:
     - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" install_docker.yaml
+  when:
+    - manual
 
 container-deployment:
   stage: deploy

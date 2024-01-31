@@ -3,8 +3,8 @@ stages:
   - build
   - deploy
 
-#variables:
-#  ANSIBLE_LOCAL_PATH: /home/gitlab-runner/builds/zvN3A5z1/0/dualedu/2022-2023/sis/dmajoros/ansible
+variables:
+  ANSIBLE_LOCAL_PATH: /home/gitlab-runner/builds/zvN3A5z1/0/dualedu/2022-2023/sis/dmajoros/ansible
 
 before_script:
   - sudo yum update -y
@@ -28,7 +28,7 @@ docker-install:
   tags:
     - dualedu-docker
   script:
-    - ansible-playbook install_docker.yaml
+    - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" install_docker.yaml
 
 #container-deployment:
  # stage: deploy

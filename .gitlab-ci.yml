@@ -26,7 +26,8 @@ docker-install:
   tags:
     - dualedu-docker
   script:
-    - ansible all_nodes -i  "$ANSIBLE_LOCAL_PATH" install_docker.yaml
+    - pwd
+    - ansible all_nodes -i install_docker.yaml
 
 #container-deployment:
  # stage: deploy

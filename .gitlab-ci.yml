@@ -12,6 +12,8 @@ before_script:
   - ansible --version
   #- export ANSIBLE_CONFIG="$ANSIBLE_LOCAL_PATH/ansible.cfg"
   #- export ANSIBLE_HOSTS="$ANSIBLE_LOCAL_PATH/hosts"
+  - pwd
+  - ls -la
 
 
 ping-nodes:
@@ -26,7 +28,7 @@ docker-install:
   tags:
     - dualedu-docker
   script:
-    - ansible-playbook -i . install_docker.yaml
+    - ansible-playbook -i install_docker.yaml
 
 #container-deployment:
  # stage: deploy

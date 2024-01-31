@@ -14,7 +14,7 @@ ping_nodes:
   stage: test
   tags: 
     - dualedu-docker
-  image: registry.gitlab.com/torese/docker-ansible
+  #image: registry.gitlab.com/torese/docker-ansible
   script:
     - export ANSIBLE_CONFIG="$ANSIBLE_LOCAL_PATH/ansible.cfg"
     - export ANSIBLE_HOSTS="$ANSIBLE_LOCAL_PATH/hosts"

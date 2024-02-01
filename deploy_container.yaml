@@ -2,6 +2,8 @@
   - name: Deploy Container
     hosts: worker  
     become_user: root
+    vars:
+      ansible_python_interpreter: /usr/bin/python2.7
 
     tasks:
       - name: Pull Docker image

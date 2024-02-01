@@ -9,8 +9,8 @@ variables:
 before_script:
   - sudo yum update -y
   #- sudo yum install -y ansible
-  - pip3 install ansible | grep "python version"
-  - ansible --version
+  - pip3 install ansible 
+  - ansible --version | grep "python version"
 
 
 ping-nodes:

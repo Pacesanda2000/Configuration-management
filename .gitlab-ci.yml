@@ -8,7 +8,8 @@ variables:
 
 before_script:
   - sudo yum update -y
-  - sudo yum install -y ansible
+  #- sudo yum install -y ansible
+  - pip3 install ansible | grep "python version"
   - ansible --version
 
 

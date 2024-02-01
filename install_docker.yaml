@@ -2,16 +2,14 @@
   - name: Install docker
     gather_facts: No
     hosts: all_nodes
+    vars:
+      ansible_python_interpreter: /usr/bin/python2.7
 
     tasks:
       - name: Install yum utils
         yum:
           name: yum-utils
           state: latest
-
-      - name: 
-
-      
 
       - name: Remove docker if installed from CentOS repo
         yum:

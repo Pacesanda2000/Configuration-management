@@ -34,6 +34,7 @@ container-deployment:
     - dualedu-docker
   script:
     - ansible-playbook -i  "$ANSIBLE_LOCAL_PATH/hosts" deploy_container.yaml
+  when: manual
 
 
   

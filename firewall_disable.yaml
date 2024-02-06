@@ -6,5 +6,11 @@
     - name: Vypnutie firewalld pomocou systemctl
       command: systemctl disable firewalld --now
 
+    - name: Zistenie stavu swapu
+      shell: swapon -s
+      register: swap_status
+      ignore_errors: yes
+
     - name: Vypnutie swapu
-      command: sudo swapoff /dev/mapper/centos-swap
+      command: swapoff /dev/mapper/centos-swap
+      when: "'/dev/mapper/centos-swap' in swap_status.stdout"

@@ -1,7 +1,10 @@
 ---
-- name: Vypnutie firewalld
-  hosts: all_nodes
+- name: Vypnutie firewalld a swapu
+  hosts: your_centos_hosts
   become: yes
   tasks:
     - name: Vypnutie firewalld pomocou systemctl
       command: systemctl disable firewalld --now
+
+    - name: Vypnutie swapu
+      command: swapoff /dev/mapper/centos-swap

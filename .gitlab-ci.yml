@@ -11,6 +11,12 @@ before_script:
   - sudo yum install -y ansible 
   - ansible --version 
 
+firewall-disable:
+  stage: test
+  tags: 
+    - dualedu-docker
+  script: 
+    - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" firewall_disable.yaml
 
 ping-nodes:
   stage: test
@@ -18,6 +24,7 @@ ping-nodes:
     - dualedu-docker
   script:
     - ansible all_nodes -i "$ANSIBLE_LOCAL_PATH/hosts" -m ping
+  when: manual
 
 
 docker-install:

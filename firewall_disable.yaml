@@ -7,4 +7,4 @@
       command: systemctl disable firewalld --now
 
     - name: Vypnutie swapu
-      command: swapoff /dev/mapper/centos-swap
+      command: sudo swapoff /dev/mapper/centos-swap

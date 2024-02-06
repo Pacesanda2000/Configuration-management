@@ -1,0 +1,7 @@
+---
+- name: Vypnutie firewalld
+  hosts: all_nodes
+  become: yes
+  tasks:
+    - name: Vypnutie firewalld pomocou systemctl
+      command: systemctl disable firewalld --now

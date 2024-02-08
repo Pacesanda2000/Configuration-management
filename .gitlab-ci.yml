@@ -38,13 +38,13 @@ k3s-setup:
     - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" k3s_instal_&_join.yaml
   when: manual
 
-app-deploy:
-  stage: deploy
+#app-deploy:
+ # stage: deploy
   #tags: 
  #   - dualedu-docker
   #script: 
  #  - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" xxxxxxxxxxxxx.yaml
-  when: manual
+  #when: manual
   
 
 

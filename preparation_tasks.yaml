@@ -1,16 +1,16 @@
 ---
-- name: Vypnutie firewalld a swapu
+- name: Preparation tasks
   hosts: all_nodes
   become: yes
   tasks:
-    - name: Vypnutie firewalld pomocou systemctl
+    - name: Firewall disabling
       command: systemctl disable firewalld --now
 
-    - name: Zistenie stavu swapu
+    - name: Swap status
       shell: swapon -s
       register: swap_status
       ignore_errors: yes
 
-    - name: Vypnutie swapu
+    - name: Swap off depend on status
       command: swapoff /dev/mapper/centos-swap
       when: "'/dev/mapper/centos-swap' in swap_status.stdout"

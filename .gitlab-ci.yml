@@ -11,9 +11,8 @@ before_script:
   - sudo yum update -y
   - sudo yum install -y ansible 
   - ansible --version 
-
-tags: 
-    - dualedu-docker
+  - tags:
+      - dualedu-docker
 
 ping-nodes:
   stage: test

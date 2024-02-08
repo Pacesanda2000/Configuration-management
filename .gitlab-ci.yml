@@ -11,29 +11,28 @@ before_script:
   - sudo yum update -y
   - sudo yum install -y ansible 
   - ansible --version 
-  - tags:
-      - dualedu-docker
+
 
 ping-nodes:
   stage: test
- # tags: 
-  #  - dualedu-docker
+  tags: 
+    - dualedu-docker
   script:
     - ansible all_nodes -i "$ANSIBLE_LOCAL_PATH/hosts" -m ping
   when: manual
 
 preparation-tasks:
   stage: test
-  #tags: 
-  #  - dualedu-docker
+  tags: 
+    - dualedu-docker
   script: 
     - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" preparation_tasks.yaml
   when: manual
   
 k3s-setup:
   stage: build
-  #tags: 
-  #  - dualedu-docker
+  tags: 
+    - dualedu-docker
   script: 
     - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" k3s_instal_&_join.yaml
   when: manual

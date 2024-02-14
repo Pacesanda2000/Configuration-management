@@ -34,7 +34,7 @@ k3s-setup:
   tags: 
     - dualedu-docker
   script: 
-    - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" k3s_instal_&_join.yaml
+    - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" k3s_install.yaml
   when: manual
 
 #app-deploy:

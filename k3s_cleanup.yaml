@@ -7,10 +7,12 @@
   tasks:
     - name: Cleanup k3s on master node
       shell: |
+        /usr/local/bin/k3s-killall.sh
         /usr/local/bin/k3s-uninstall.sh
       when: "'master' in group_names"
 
     - name: Cleanup k3s on worker nodes
       shell: |
+        /usr/local/bin/k3s-killall.sh
         /usr/local/bin/k3s-agent-uninstall.sh
       when: "'worker' in group_names"

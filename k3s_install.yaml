@@ -23,7 +23,7 @@
     - name: Set k3s token fact
       set_fact:
         k3s_token: "{{ k3s_token_output.stdout }}"
-      when: "'master' in group_names"
+      when: "'worker' in group_names"
 
     - name: Install k3s on worker nodes
       shell: |

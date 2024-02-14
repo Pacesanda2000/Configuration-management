@@ -1,23 +1,20 @@
 ---
-- name: Install k3s and join into cluster 
-
+- name: Nainštalovať a pripojiť K3s do zväzku
   hosts: all_nodes
   become: yes
 
   vars:
     k3s_custom_token: "dualedu"
     k3s_server_IP: "10.207.0.18"
+    k3s_install_script_url: "https://get.k3s.io"
 
   tasks:
-    - name: Install k3s on master node
-      shell: |
-        curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.26.2+k3s1 K3S_URL=https://{{ k3s_server_IP }}:6443 K3S_TOKEN={{ k3s_custom_token }} sh -
+    - name: Nainštalovať K3s na uzol master
+      community.general.shell:
+        cmd: "{{ k3s_install_script_url }} | INSTALL_K3S_VERSION=v1.26.2+k3s1 K3S_URL=https://{{ k3s_server_IP }}:6443 K3S_TOKEN={{ k3s_custom_token }} --disable-traefik --write-kubeconfig-mode=644 sh -"
       when: "'master' in group_names"
 
-    - name: Install k3s on worker nodes
-      shell: |
-        curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.26.2+k3s1 K3S_URL=https://{{ k3s_server_IP }}:6443 K3S_TOKEN={{ k3s_custom_token }} K3S_NODE_ROLE="worker" sh -
+    - name: Nainštalovať K3s na uzly worker
+      community.general.shell:
+        cmd: "{{ k3s_install_script_url }} | INSTALL_K3S_VERSION=v1.26.2+k3s1 K3S_URL=https://{{ k3s_server_IP }}:6443 K3S_TOKEN={{ k3s_custom_token }} K3S_NODE_ROLE="worker" sh -"
       when: "'worker' in group_names"
-
-#--disable-traefik --write-kubeconfig-mode=644
-    

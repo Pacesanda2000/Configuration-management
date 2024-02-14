@@ -12,6 +12,7 @@
     - name: Install k3s on master node
       shell: |
         curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.26.2+k3s1 sh -
+        ls -la
       when: "'master' in group_names"
 
     - name: Install k3s on worker nodes

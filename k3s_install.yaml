@@ -18,6 +18,7 @@
       shell: cat /var/lib/rancher/k3s/server/node-token
       register: k3s_token_output
       changed_when: false
+      when: "'master' in group_names"
 
     - name: Set k3s token fact
       set_fact:

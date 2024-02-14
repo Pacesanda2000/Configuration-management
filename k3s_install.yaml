@@ -11,15 +11,12 @@
   tasks:
     - name: Install k3s on master node
       shell: |
-        curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.26.2+k3s1 K3S_URL=https://{{ k3s_server_IP }}:6443 K3S_TOKEN={{ k3s_custom_token }} --disable traefik --write-kubeconfig-mode=644 sh -
-        #sudo chmod 644 /etc/rancher/k3s/k3s.yaml
-        #export PATH=$PATH:usr/local/bin/k3s
+        curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.26.2+k3s1 K3S_URL=https://{{ k3s_server_IP }}:6443 K3S_TOKEN={{ k3s_custom_token }} --disable-traefik --write-kubeconfig-mode=644 sh -
       when: "'master' in group_names"
 
     - name: Install k3s on worker nodes
       shell: |
         curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.26.2+k3s1 K3S_URL=https://{{ k3s_server_IP }}:6443 K3S_TOKEN={{ k3s_custom_token }} K3S_NODE_ROLE="worker" sh -
-        #export PATH=$PATH:usr/local/bin/k3s
       when: "'worker' in group_names"
 
 

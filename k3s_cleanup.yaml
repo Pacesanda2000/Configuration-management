@@ -9,10 +9,10 @@
       shell: |
         /usr/local/bin/k3s-killall.sh
         /usr/local/bin/k3s-uninstall.sh
-      when: "'master' in group_names"
+      when: "'master' in group_names and ansible_local['k3s_installed']|default(false)"
 
     - name: Cleanup k3s on worker nodes
       shell: |
         /usr/local/bin/k3s-killall.sh
         /usr/local/bin/k3s-agent-uninstall.sh
-      when: "'worker' in group_names"
+      when: "'worker' in group_names and ansible_local['k3s_installed']|default(false)"

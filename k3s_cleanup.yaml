@@ -5,7 +5,7 @@
   tasks:
     - name: Clone a gitlab repository
       git:
-        repo: https://gitlab.dual.edu/dualedu/2022-2023/sis/dmajoros/ansible.git
-        dest: /tmp
+        repo: 'https://gitlab.dual.edu/dualedu/2022-2023/sis/dmajoros/ansible/k3s_cleanup.sh'
+        dest: "/tmp"
         clone: yes
 

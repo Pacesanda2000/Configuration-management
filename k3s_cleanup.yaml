@@ -4,19 +4,19 @@
   become: yes
   tasks:
     - name: Check if k3s is installed
-      command: "command -v k3s"
+      stat:
+        path: "/usr/local/bin/k3s"
       register: k3s_check
-      ignore_errors: true
 
     - name: Uninstall k3s on master node if installed
       shell: "/usr/local/bin/k3s-uninstall.sh"
-      when: k3s_check.rc == 0 and "'master' in group_names"
+      when: k3s_check.stat.exists and "'master' in group_names"
 
     - name: Uninstall k3s on worker nodes if installed
       shell: "/usr/local/bin/k3s-agent-uninstall.sh"
-      when: k3s_check.rc == 0 and "'worker' in group_names"
+      when: k3s_check.stat.exists and "'worker' in group_names"
 
     - name: Print message if k3s is not installed
       debug:
         msg: "Nothing to do because k3s is not installed."
-      when: k3s_check.rc != 0
+      when: not k3s_check.stat.exists

@@ -1,7 +1,7 @@
 ---
 - name: Install k3s and join into cluster 
 
-  #hosts: all_nodes
+  hosts: all_nodes
   become: yes
 
   vars:

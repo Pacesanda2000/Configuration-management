@@ -12,3 +12,11 @@
         warn: false
       when: "'master' in group_names"
 
+    - name: K3s cleanup on worker nodes
+      shell: |
+        /usr/local/bin/k3s-killall.sh
+        /usr/local/bin/k3s-agent-uninstall.sh
+      args:
+        removes: /usr/local/bin/k3s
+        warn: false
+      when: "'worker' in group_names"

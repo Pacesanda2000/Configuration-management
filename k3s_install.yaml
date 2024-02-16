@@ -21,7 +21,7 @@
       #when: "'master' in group_names"
 
     - debug:
-    	msg: "{{k3s_token.stdout_lines}}"
+    	  msg: "{{k3s_token.stdout_lines}}"
 
     - name: Install k3s on worker nodes
       hosts: worker

@@ -34,5 +34,5 @@
         }
 
         uninstall_k3s
-      args:
-        executable: "/bin/bash"
+#      args:
+ #       executable: "/bin/bash"

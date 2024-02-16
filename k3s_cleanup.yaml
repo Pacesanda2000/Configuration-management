@@ -1,11 +1,14 @@
 ---
 - name: K3s cleanup 
-  hosts: master
+  hosts: all_nodes
   become: yes
   tasks:
-    - name: Remove a file in the home directory
-      shell: /usr/local/bin/k3s-uninstall.sh
+    - name: K3s cleanup on master nodes
+      shell: |
+        /usr/local/bin/k3s-killall.sh
+        /usr/local/bin/k3s-uninstall.sh
       args:
-        removes: /usr/local/bin/k3s-uninstall.sh
+        removes: /usr/local/bin/k3s
         warn: false
+      when: "'master' in group_names"
 

@@ -26,7 +26,9 @@
       when: "'master' in group_names"
 
     - name: Install k3s on worker nodes
-      shell: "curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.26.2+k3s1 K3S_URL=https://{{ k3s_server_IP }}:6443 K3S_TOKEN={{ k3s_token }} sh -"
+      shell: |
+        curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.26.2+k3s1 INSTALL_K3S_EXEC="agent --server https://{{ k3s_server_IP }}:6443 --token {{ k3s_token }}" sh -s -
       when: "'worker' in group_names" 
 
 #K3S_NODE_ROLE="worker"
+#https://{{ k3s_server_IP }}:6443 {{ k3s_token }}

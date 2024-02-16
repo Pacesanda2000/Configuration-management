@@ -20,8 +20,9 @@
       register: k3s_token
       #when: "'master' in group_names"
 
-    - debug:
-    	    msg: "{{k3s_token.stdout_lines}}"
+    - name: Print k3s token  
+      debug:
+        msg: "k3s token is:  {{k3s_token.stdout_lines}}"
 
     - name: Install k3s on worker nodes
       hosts: worker

@@ -16,13 +16,7 @@
 
     - name: Read k3s token from file
       shell: cat /var/lib/rancher/k3s/server/node-token
-      register: k3s_token_output
-      changed_when: false
-      when: "'master' in group_names"
-
-    - name: Set k3s token fact
-      set_fact:
-        k3s_token: "{{ k3s_token_output.stdout }}"
+      register: k3s_token
       when: "'master' in group_names"
 
     - name: Install k3s on worker nodes

@@ -22,7 +22,7 @@
     - name: Print k3s token  
       debug:
         msg: "k3s token is:  {{ k3s_token }}"
-      #when: k3s_token is defined
+      when: "'master' in group_names"
 
     - name: Install k3s on worker nodes
       shell: |

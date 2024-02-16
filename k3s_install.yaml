@@ -21,7 +21,7 @@
 
     - name: Print k3s token  
       debug:
-        msg: "k3s token is:  {{k3s_token.stdout}}"
+        msg: "k3s token is:  {{ k3s_token }}"
       #when: k3s_token is defined
 
     - name: Install k3s on worker nodes

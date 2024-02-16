@@ -21,7 +21,7 @@
 
     - name: Print k3s token  
       debug:
-        msg: "{{ k3s_token }}"
+        msg: "{{ k3s_token.stdout }}"
       when: "'master' in group_names"
 
     - name: Install k3s on worker nodes

@@ -34,7 +34,6 @@ k3s-setup:
   tags: 
     - dualedu-docker
   script: 
-    #- ansible-galaxy collection install community.general
     - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" k3s_install.yaml
   when: manual
 

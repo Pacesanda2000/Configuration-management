@@ -1,5 +1,0 @@
-token: "secret"
-write-kubeconfig-mode: "0644"
-disable:
-  - traefik
-server: "https://10.207.0.18:6443"

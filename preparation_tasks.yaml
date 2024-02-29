@@ -3,25 +3,25 @@
   hosts: all_nodes
   become: yes
   tasks:
-    - name: install updates using yum
+    - name: Install updates using yum
       yum:
         name: "*"
         state: latest
     
-    - name: reboot the server if required
+    - name: Reboot the server if required
       shell: sleep 3; reboot
       ignore_errors: true
       changed_when: false
       async: 1
       poll: 0
 
-    - name: wait for server to come back after reboot
+    - name: Wait for server to come back after reboot
       wait_for_connection:
         timeout: 120
         delay: 20
       register: reboot_result
 
-    - name: reboot time
+    - name: Reboot time
       debug:
         msg: "The system rebooted in {{ reboot_result.elapsed }} seconds."
 

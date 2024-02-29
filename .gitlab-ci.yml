@@ -12,7 +12,6 @@ before_script:
   - sudo yum install -y ansible 
   - ansible --version 
 
-
 ping-nodes:
   stage: test
   tags: 
@@ -45,13 +44,7 @@ k3s-cleanup:
     - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" k3s_cleanup.yaml
   when: manual
 
-#app-deploy:
- # stage: deploy
-  #tags: 
- #   - dualedu-docker
-  #script: 
- #  - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" xxxxxxxxxxxxx.yaml
-  #when: manual
+
   
 
 

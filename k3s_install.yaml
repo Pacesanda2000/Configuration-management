@@ -10,24 +10,6 @@
   tasks:
     - name: Install k3s on master node
       shell: |
-        curl -sfL https://get.k3s.io | K3S_TOKEN=${{ k3s_token }} sh -s - server \
-            --node-taint CriticalAddonsOnly=true:NoExecute \
-            --cluster-init \
-            --write-kubeconfig-mode "0644" 
+        export TOKEN={{ k3s_token }}
+        export IP={{ k3s_server_IP }}
       when: "'master_main' in group_names"
-
-    - name: Install k3s on worker nodes and join cluster
-      shell: |
-        curl -sfL https://get.k3s.io | K3S_TOKEN={{ k3s_token }} sh -s - agent K3S_URL=https://{{ k3s_server_IP }}:6443   
-      when: "'worker' in group_names" 
-
-    - name: Install k3s on further master nodes, labeling worker nodes
-      shell: |
-        curl -sfL https://get.k3s.io | K3S_TOKEN={{ k3s_token }} sh -s - server \
-            --server https://{{ k3s_server_IP }}:6443 \
-            --node-taint CriticalAddonsOnly=true:NoExecute \
-            --cluster-init \
-            --write-kubeconfig-mode "0644" 
-        kubectl label nodes -l '!node-role.kubernetes.io/master' node-role.kubernetes.io/worker=worker
-      when: "'master_slave' in group_names"
-

@@ -4,7 +4,7 @@
   become: yes
 
   vars:
-    k3s_server_IP: ""
+    k3s_server_IP: "10.207.0.143"
     k3s_token: "dual-edu-token"
 
   tasks:

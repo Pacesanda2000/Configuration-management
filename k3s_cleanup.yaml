@@ -10,7 +10,7 @@
       args:
         removes: /usr/local/bin/k3s
         warn: false
-      when: "'master' in group_names"
+      when: "'master_main' in group_names or 'master_slave' in group_names" 
 
     - name: K3s cleanup on worker nodes
       shell: |

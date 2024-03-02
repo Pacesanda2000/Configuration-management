@@ -9,10 +9,6 @@
 10.207.0.144
 10.207.0.139
 
-[master]
-master_main
-master_slave
-
 [all_nodes:children]
 master_main
 master_slave

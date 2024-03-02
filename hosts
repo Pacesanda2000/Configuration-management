@@ -1,12 +1,21 @@
-[master]
-10.207.0.110
+[master_main]
+10.207.0.143
+
+[master_slave]
+10.207.0.145
+10.207.0.146
 
 [worker]
-10.207.0.115
-10.207.0.116
+10.207.0.144
+10.207.0.139
+
+[master]
+master_main
+master_slave
 
 [all_nodes:children]
-master
+master_main
+master_slave
 worker
 
 [all_nodes:vars]

@@ -11,9 +11,9 @@
     - name: Install k3s on master node
       shell: |
         curl -sfL https://get.k3s.io | K3S_TOKEN={{ k3s_token }} sh -s - server \
-	          --node-taint CriticalAddonsOnly=true:NoExecute \
-            --cluster-init \
-            --write-kubeconfig-mode "0644" 
+        --node-taint CriticalAddonsOnly=true:NoExecute \
+        --cluster-init \
+        --write-kubeconfig-mode "0644" 
       when: "'master_main' in group_names"
 
     - name: Install k3s on worker nodes and join cluster

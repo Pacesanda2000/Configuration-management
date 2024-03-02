@@ -10,8 +10,7 @@
   tasks:
     - name: Install k3s on master node
       shell: |
-        export K3S_TOKEN={{ k3s_token }}
-        curl -sfL https://get.k3s.io | K3S_TOKEN=$K3S_TOKEN sh -s - server \
+        curl -sfL https://get.k3s.io | K3S_TOKEN=${{ k3s_token }} sh -s - server \
             --node-taint CriticalAddonsOnly=true:NoExecute \
             --cluster-init \
             --write-kubeconfig-mode "0644" 
@@ -19,17 +18,13 @@
 
     - name: Install k3s on worker nodes and join cluster
       shell: |
-        export K3S_TOKEN={{ k3s_token }}
-        export K3S_IP={{ k3s_server_IP }}
-        curl -sfL https://get.k3s.io | K3S_TOKEN=$K3S_TOKEN sh -s - agent K3S_URL=https://$K3S_IP:6443   
+        curl -sfL https://get.k3s.io | K3S_TOKEN={{ k3s_token }} sh -s - agent K3S_URL=https://{{ k3s_server_IP }}:6443   
       when: "'worker' in group_names" 
 
     - name: Install k3s on further master nodes, labeling worker nodes
       shell: |
-        export K3S_TOKEN={{ k3s_token }}
-        export K3S_IP={{ k3s_server_IP }}
-        curl -sfL https://get.k3s.io | K3S_TOKEN=$K3S_TOKEN sh -s - server \
-            --server https://$K3S_IP:6443 \
+        curl -sfL https://get.k3s.io | K3S_TOKEN={{ k3s_token }} sh -s - server \
+            --server https://{{ k3s_server_IP }}:6443 \
             --node-taint CriticalAddonsOnly=true:NoExecute \
             --cluster-init \
             --write-kubeconfig-mode "0644" 

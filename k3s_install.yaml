@@ -55,14 +55,6 @@
       ansible.builtin.shell: /root/k3s-installation.sh
       when: "'worker' in group_names or 'master_slave' in group_names"
 
-    - name: Run kubectl
-      ansible.builtin.shell: kubectl get nodes -o wide
-      register: kubectl_result
-      when: "'master_main' in group_names"
-
-    - name: message
-      debug:
-        msg: "{{ kubectl_result }}"
 
     
 

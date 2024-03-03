@@ -22,9 +22,7 @@
       ansible.builtin.copy:
         content: |
           #!/bin/bash
-          curl -sfL https://get.k3s.io | sh -s - agent \ 
-              --token dual-edu-token \
-              --server https://10.207.0.143:6443
+          curl -sfL https://get.k3s.io | K3S_TOKEN=dual-edu-token sh -s - agent --server https://10.207.0.143:6443
         dest: /root/k3s-installation.sh
         mode: '0755'
       when: "'worker' in group_names"

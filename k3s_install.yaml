@@ -8,7 +8,7 @@
     k3s_token: "dual-edu-token"
 
   tasks:
-    - name: Create k3s installat
+    - name: Create k3s installation script for master_main
       ansible.builtin.copy:
         content: |
           #!/bin/bash
@@ -23,24 +23,24 @@
         mode: '0755'
       when: "'master_main' in group_names"
 
-    - name: Create k3s installatsdfasdf
+    - name: Create k3s installation script for worker
       ansible.builtin.copy:
         content: |
           #!/bin/bash
           curl -sfL https://get.k3s.io | sh -s - agent \ 
-              --token {{ k3s_token }} \
+              --token dual-edu-token \
               --server https://{{ k3s_server_IP }}:6443
         dest: /root/k3s-installation.sh
         mode: '0755'
       when: "'worker' in group_names"
 
-    - name: Create k3s installatafafwsg
+    - name: Create k3s installation script for master_slave
       ansible.builtin.copy:
         content: |
           #!/bin/bash
           curl -sfL https://get.k3s.io | sh -s - server \
-              --token {{ k3s_token }} \
-              --server https://{{ k3s_server_IP }}:6443 \
+              --token dual-edu-token \
+              --server https://10.207.0.143:6443 \
               --node-taint CriticalAddonsOnly=true:NoExecute \
               --write-kubeconfig-mode "0644" \
               --disable servicelb \

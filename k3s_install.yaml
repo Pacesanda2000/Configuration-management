@@ -23,6 +23,10 @@
         mode: '0755'
       when: "'master_main' in group_names"
 
+    - name: Run k3s installation script for master_main node
+      ansible.builtin.shell: /root/k3s-installation.sh
+      when: "'master_main' in group_names"
+
     - name: Create k3s installation script for worker
       ansible.builtin.copy:
         content: |
@@ -47,15 +51,18 @@
         mode: '0755'
       when: "'master_slave' in group_names"
 
-    - name: Run k3s installation script for master_main node
-      ansible.builtin.shell: /root/k3s-installation.sh
-      when: "'master_main' in group_names"
-
-    - name: Pause for one minute
-      ansible.builtin.pause:
-        seconds: 60
-
     - name: Run k3s installation script worker and master_slave nodes
       ansible.builtin.shell: /root/k3s-installation.sh
       when: "'worker' in group_names or 'master_slave' in group_names"
+
+    - name: Run kubectl
+      ansible.builtin.shell: kebuctl get nodes -o wide
+        register: kubectl_result
+      when: "'master_main' in group_names"
+
+    - name: message
+      debug:
+        msg: "{{ kubectl_result }}"
+
+    
 

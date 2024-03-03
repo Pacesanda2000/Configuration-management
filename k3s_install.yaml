@@ -19,6 +19,7 @@
               --write-kubeconfig-mode "0644" \
               --disable servicelb \
               --disable traefik
+          sed -i -e 's/127.0.0.1/{{ k3s_server_IP }}/g' /etc/rancher/k3s/k3s.yaml
         dest: /root/k3s-installation.sh
         mode: '0755'
       when: "'master_main' in group_names"

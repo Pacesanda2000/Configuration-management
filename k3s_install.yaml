@@ -23,6 +23,10 @@
         mode: '0755'
       when: "'master_main' in group_names"
 
+    - name: Pause for one minute
+      ansible.builtin.pause:
+        seconds: 60
+
     - name: Create k3s installation script for worker
       ansible.builtin.copy:
         content: |

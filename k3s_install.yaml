@@ -2,13 +2,18 @@
 - name: K3S installation and join cluster 
   hosts: all_nodes
   become: yes
+
+  vars:
+    k3s_server_IP: "10.207.0.143"
+    k3s_token: "dual-edu-token"
+
   tasks:
     - name: Create k3s installation script for master_main
       ansible.builtin.copy:
         content: |
           #!/bin/bash
           curl -sfL https://get.k3s.io | sh -s - server \
-              --token dual-edu-token \
+              --token {{ k3s_token }} \
               --node-taint CriticalAddonsOnly=true:NoExecute \
               --cluster-init \
               --write-kubeconfig-mode "0644" \
@@ -22,8 +27,7 @@
       ansible.builtin.copy:
         content: |
           #!/bin/bash
-          curl -sfL https://get.k3s.io | K3S_TOKEN=dual-edu-token sh -s - agent \ 
-              --server https://10.207.0.143:6443
+          curl -sfL https://get.k3s.io | K3S_TOKEN={{ k3s_token }} sh -s - agent --server https://10.207.0.143:6443
         dest: /root/k3s-installation.sh
         mode: '0755'
       when: "'worker' in group_names"
@@ -33,7 +37,7 @@
         content: |
           #!/bin/bash
           curl -sfL https://get.k3s.io | sh -s - server \
-              --token dual-edu-token \
+              --token {{ k3s_token }} \
               --server https://10.207.0.143:6443 \
               --node-taint CriticalAddonsOnly=true:NoExecute \
               --write-kubeconfig-mode "0644" \

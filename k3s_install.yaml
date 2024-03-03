@@ -12,11 +12,12 @@
       set_fact:
         script_content: |
           #!/bin/bash
-          curl -sfL https://get.k3s.io | K3S_TOKEN=dual-edu-token sh -s - server \
-	            --node-taint CriticalAddonsOnly=true:NoExecute \
+          curl -sfL https://get.k3s.io | sh -s - server \
+              --token dual-edu-token \
+              --node-taint CriticalAddonsOnly=true:NoExecute \
               --cluster-init \
               --write-kubeconfig-mode "0644" \
-	            --disable servicelb \
+              --disable servicelb \
               --disable traefik
               
     - name: Pridať obsah do súboru a nastaviť oprávnenia
@@ -27,4 +28,4 @@
 
     - name: Spustiť skript
       ansible.builtin.shell: /root/k3s-instalation.sh
-      
+

@@ -62,12 +62,8 @@
 
     - name: Show k3s.yaml content on master_main
       debug:
-        msg: |
-          {% for line in k3s_yaml_content.stdout_lines %}
-          {{ line }}
-          {% endfor %}
+        msg: "{{ k3s_yaml_content.stdout_lines }}"
       when: "'master_main' in group_names"
-
 
 
     

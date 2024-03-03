@@ -10,7 +10,6 @@
         rm -rf /root/k3s-installation.sh
       args:
         removes: /usr/local/bin/k3s
-        warn: false
       when: "'master_main' in group_names or 'master_slave' in group_names" 
 
     - name: K3s cleanup on worker nodes
@@ -20,5 +19,4 @@
         rm -rf /root/k3s-installation.sh
       args:
         removes: /usr/local/bin/k3s
-        warn: false
       when: "'worker' in group_names"

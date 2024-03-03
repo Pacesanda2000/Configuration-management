@@ -1,6 +1,6 @@
 ---
 - name: K3S installation and join cluster 
-  hosts: all_nodes
+  hosts: master_main
   become: yes
 
   vars:
@@ -12,14 +12,19 @@
       set_fact:
         script_content: |
           #!/bin/bash
-          echo "Váš obsah skriptu sem"
-          echo "Môžete pridať ďalšie príkazy"
-          echo "napríklad aj k3s-install"
-          k3s-install
-
+          curl -sfL https://get.k3s.io | K3S_TOKEN=dual-edu-token sh -s - server \
+	            --node-taint CriticalAddonsOnly=true:NoExecute \
+              --cluster-init \
+              --write-kubeconfig-mode "0644" \
+	            --disable servicelb \
+              --disable traefik
+              
     - name: Pridať obsah do súboru a nastaviť oprávnenia
       ansible.builtin.copy:
         content: "{{ script_content }}"
-        dest: /root/k3s-installll.sh  # Nahraďte "/path/to/your/script.sh" cestou k vášmu súboru
-        mode: '0755'  # Nastaví spustiteľné oprávnenia
+        dest: /root/k3s-instalation.sh  
+        mode: '0755'  
+
+    - name: Spustiť skript
+      ansible.builtin.shell: /root/k3s-instalation.sh
       

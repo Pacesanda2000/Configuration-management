@@ -23,7 +23,31 @@
         mode: '0755'
       when: "'master_main' in group_names"
 
+    - name: Create k3s installatsdfasdf
+      ansible.builtin.copy:
+        content: |
+          #!/bin/bash
+          curl -sfL https://get.k3s.io | sh -s - agent \ 
+              --token {{ k3s_token }} \
+              --server https://{{ k3s_server_IP }}:6443
+        dest: /root/k3s-installation.sh
+        mode: '0755'
+      when: "'worker' in group_names"
 
+    - name: Create k3s installatafafwsg
+      ansible.builtin.copy:
+        content: |
+          #!/bin/bash
+          curl -sfL https://get.k3s.io | sh -s - server \
+              --token {{ k3s_token }} \
+              --server https://{{ k3s_server_IP }}:6443 \
+              --node-taint CriticalAddonsOnly=true:NoExecute \
+              --write-kubeconfig-mode "0644" \
+              --disable servicelb \
+              --disable traefik 
+        dest: /root/k3s-installation.sh
+        mode: '0755'
+      when: "'master_slave' in group_names"
 
     - name: Run k3s installation script
       ansible.builtin.shell: /root/k3s-installation.sh

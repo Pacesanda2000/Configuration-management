@@ -22,7 +22,8 @@
       ansible.builtin.copy:
         content: |
           #!/bin/bash
-          curl -sfL https://get.k3s.io | K3S_TOKEN=dual-edu-token sh -s - agent --server https://10.207.0.143:6443
+          curl -sfL https://get.k3s.io | K3S_TOKEN=dual-edu-token sh -s - agent \ 
+              --server https://10.207.0.143:6443
         dest: /root/k3s-installation.sh
         mode: '0755'
       when: "'worker' in group_names"
@@ -42,7 +43,7 @@
         mode: '0755'
       when: "'master_slave' in group_names"
 
-    - name: Run k3s installation script
+    - name: Run k3s installation script for master_main node
       ansible.builtin.shell: /root/k3s-installation.sh
       when: "'master_main' in group_names"
 
@@ -50,7 +51,7 @@
       ansible.builtin.pause:
         seconds: 60
 
-    - name: Run k3s installation script
+    - name: Run k3s installation script worker and master_slave nodes
       ansible.builtin.shell: /root/k3s-installation.sh
       when: "'worker' in group_names or 'master_slave' in group_names"
 

@@ -57,7 +57,7 @@
 
     - name: Run kubectl
       ansible.builtin.shell: kebuctl get nodes -o wide
-        register: kubectl_result
+      register: kubectl_result
       when: "'master_main' in group_names"
 
     - name: message

@@ -55,6 +55,16 @@
       ansible.builtin.shell: /root/k3s-installation.sh
       when: "'worker' in group_names or 'master_slave' in group_names"
 
+    - name: Display content of k3s.yaml on master_main
+      ansible.builtin.shell: cat /etc/rancher/k3s/k3s.yaml
+      register: k3s_yaml_content
+      when: "'master_main' in group_names"
+
+    - name: Show k3s.yaml content on master_main
+      debug:
+        msg: "{{ k3s_yaml_content.stdout_lines }}"
+      when: k3s_yaml_content is defined and k3s_yaml_content.rc == 0 and 'master_main' in group_names
+
 
     
 

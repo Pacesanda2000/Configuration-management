@@ -56,7 +56,7 @@
       when: "'worker' in group_names or 'master_slave' in group_names"
 
     - name: Run kubectl
-      ansible.builtin.shell: kebuctl get nodes -o wide
+      ansible.builtin.shell: kubectl get nodes -o wide
       register: kubectl_result
       when: "'master_main' in group_names"
 

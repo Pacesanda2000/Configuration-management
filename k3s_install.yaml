@@ -62,8 +62,8 @@
 
     - name: Show k3s.yaml content on master_main
       debug:
-        msg: "{{ k3s_yaml_content.stdout_lines }}"
-      when: k3s_yaml_content is defined and k3s_yaml_content.rc == 0 and 'master_main' in group_names
+        msg: "{{ k3s_yaml_content.stdout_lines | join('\n') }}"
+      when: "'master_main' in group_names"
 
 
     

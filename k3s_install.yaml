@@ -1,6 +1,6 @@
 ---
 - name: K3S installation and join cluster 
-  hosts: master_main
+  hosts: all_nodes
   become: yes
 
   vars:
@@ -8,7 +8,7 @@
     k3s_token: "dual-edu-token"
 
   tasks:
-    - name: Create k3s installation script
+    - name: Create k3s installat
       ansible.builtin.copy:
         content: |
           #!/bin/bash
@@ -21,6 +21,18 @@
               --disable traefik
         dest: /root/k3s-installation.sh
         mode: '0755'
+        when: "'master_main' in group_names"
+
+    - name: Create k3s installatsdfasdf
+      ansible.builtin.copy:
+        content: |
+          #!/bin/bash
+          curl -sfL https://get.k3s.io | sh -s - agent \ 
+              --token {{ k3s_token }} \
+              --server https://{{ k3s_server_IP }}:6443
+        dest: /root/k3s-installation.sh
+        mode: '0755'
+        when: "'worker' in group_names"
 
     - name: Run k3s installation script
       ansible.builtin.shell: /root/k3s-installation.sh

@@ -8,24 +8,20 @@
     k3s_token: "dual-edu-token"
 
   tasks:
-    - name: Install k3s on master node
-      set_fact:
-        script_content: |
+    - name: Create k3s installation script
+      ansible.builtin.copy:
+        content: |
           #!/bin/bash
           curl -sfL https://get.k3s.io | sh -s - server \
-              --token dual-edu-token \
+              --token {{ k3s_token }} \
               --node-taint CriticalAddonsOnly=true:NoExecute \
               --cluster-init \
               --write-kubeconfig-mode "0644" \
               --disable servicelb \
               --disable traefik
-              
-    - name: Pridať obsah do súboru a nastaviť oprávnenia
-      ansible.builtin.copy:
-        content: "{{ script_content }}"
-        dest: /root/k3s-instalation.sh  
-        mode: '0755'  
+        dest: /root/k3s-installation.sh
+        mode: '0755'
 
-    - name: Spustiť skript
-      ansible.builtin.shell: /root/k3s-instalation.sh
+    - name: Run k3s installation script
+      ansible.builtin.shell: /root/k3s-installation.sh
 

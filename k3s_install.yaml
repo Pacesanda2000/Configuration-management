@@ -8,7 +8,7 @@
     k3s_token: "dual-edu-token"
 
   tasks:
-    - name: Create k3s installation script for master_main
+    - name: Create k3s installation script for master_main node
       ansible.builtin.copy:
         content: |
           #!/bin/bash
@@ -28,7 +28,7 @@
       ansible.builtin.shell: /root/k3s-installation.sh
       when: "'master_main' in group_names"
 
-    - name: Create k3s installation script for worker
+    - name: Create k3s installation script for worker nodes
       ansible.builtin.copy:
         content: |
           #!/bin/bash
@@ -37,7 +37,7 @@
         mode: '0755'
       when: "'worker' in group_names"
 
-    - name: Create k3s installation script for master_slave
+    - name: Create k3s installation script for master_slave nodes
       ansible.builtin.copy:
         content: |
           #!/bin/bash
@@ -59,6 +59,11 @@
     - name: Display content of k3s.yaml on master_main
       ansible.builtin.shell: cat /etc/rancher/k3s/k3s.yaml
       register: k3s_yaml_content
+      when: "'master_main' in group_names"
+
+    - name: Show k3s.yaml content on master_main
+      debug:
+        msg: "{{ '\n' if k3s_yaml_content.stdout else '' }}{{ k3s_yaml_content.stdout }}"
       when: "'master_main' in group_names"
 
 

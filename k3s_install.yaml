@@ -58,8 +58,8 @@
 
     - name: Show k3s.yaml content 
       debug:
-        msg: "{{ k3s_yaml_content }}
-    
+        msg: "{{ k3s_yaml_content }}"
+      when: "'master_main' in group_names"
 
 
 

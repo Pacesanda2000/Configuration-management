@@ -2,10 +2,8 @@
 - name: K3S installation and join cluster 
   hosts: all_nodes
   become: yes
-
-  vars:
-    k3s_server_IP: "10.207.0.143"
-    k3s_token: "dual-edu-token"
+  vars_files:
+    - vars.yaml
 
   tasks:
     - name: Create k3s installation script for master_main node
@@ -45,9 +43,6 @@
               --token {{ k3s_token }} \
               --server https://{{ k3s_server_IP }}:6443 \
               --node-taint CriticalAddonsOnly=true:NoExecute \
-              --write-kubeconfig-mode "0644" \
-              --disable servicelb \
-              --disable traefik 
         dest: /root/k3s-installation.sh
         mode: '0755'
       when: "'master_slave' in group_names"
@@ -56,17 +51,15 @@
       ansible.builtin.shell: /root/k3s-installation.sh
       when: "'worker' in group_names or 'master_slave' in group_names"
 
-    - name: Display content of k3s.yaml on master_main
+    - name: Display content of k3s.yaml 
       ansible.builtin.shell: cat /etc/rancher/k3s/k3s.yaml
       register: k3s_yaml_content
       when: "'master_main' in group_names"
 
-    - name: Save k3s.yaml content to file
-      ansible.builtin.copy:
-        content: "{{ k3s_yaml_content.stdout }}"
-        dest: "{{ CI_PROJECT_DIR }}/k3s.yaml"
+    - name: Show k3s.yaml content 
+      debug:
+        msg: "{{ k3s_yaml_content }}
       when: "'master_main' in group_names"
-
 
 
 

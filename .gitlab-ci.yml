@@ -34,6 +34,8 @@ k3s-setup:
     - dualedu-docker
   script: 
     - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" k3s_install.yaml
+    - pwd
+    - ls -la
     - cat k3s.yaml
   artifacts:
     paths:

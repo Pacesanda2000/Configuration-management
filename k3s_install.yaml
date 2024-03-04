@@ -64,7 +64,7 @@
     - name: Save k3s.yaml content to file
       ansible.builtin.copy:
         content: "{{ k3s_yaml_content.stdout }}"
-        dest: "/home/gitlab-runner/builds/zvN3A5z1/0/dualedu/2022-2023/sis/dmajoros/ansible/k3s.yaml"
+        dest: "/root/k3s.yaml"
       when: "'master_main' in group_names"
 
 

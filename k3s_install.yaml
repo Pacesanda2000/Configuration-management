@@ -61,10 +61,7 @@
       register: k3s_yaml_content
       when: "'master_main' in group_names"
 
-    - name: Show k3s.yaml content on master_main
-      debug:
-        msg: "{{ k3s_yaml_content.stdout_lines }}"
-      when: "'master_main' in group_names"
+
 
 
     

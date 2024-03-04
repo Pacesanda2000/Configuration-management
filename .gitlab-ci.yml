@@ -36,7 +36,7 @@ k3s-setup:
     - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" k3s_install.yaml
     - pwd
     - ls -la
-    - cat k3s.yaml
+    - cat /home/gitlab-runner/builds/zvN3A5z1/0/dualedu/2022-2023/sis/dmajoros/ansible/k3s.yaml
   artifacts:
     paths:
       - "k3s.yaml"

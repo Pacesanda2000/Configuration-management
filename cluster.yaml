@@ -12,8 +12,7 @@
               --node-taint CriticalAddonsOnly=true:NoExecute \
               --cluster-init \
               --write-kubeconfig-mode "0644" \
-              --disable servicelb \
-              --disable traefik
+              --disable servicelb 
         sed -i -e 's/127.0.0.1/{{ k3s_server_IP }}/g' /etc/rancher/k3s/k3s.yaml
       when: "'master1' in group_names"
       

@@ -1,7 +1,6 @@
 stages:
   - test
   - build
-  - deploy
   - cleanup
 
 variables:
@@ -19,29 +18,23 @@ ping-nodes:
   script:
     - ansible all_nodes -i "$ANSIBLE_LOCAL_PATH/hosts" -m ping
   when: manual
-
-preparation-tasks:
-  stage: test
-  tags: 
-    - dualedu-docker
-  script: 
-    - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" preparation_tasks.yaml
-  when: manual
   
-k3s-setup:
+cluster-setup:
   stage: build
   tags: 
     - dualedu-docker
   script: 
-    - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" k3s_install.yaml
+    - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" preparation-tasks.yaml
+    - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" cluster.yaml
+    - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" additional-tasks.yaml
   when: manual
 
-k3s-cleanup:
+cluster-cleanup:
   stage: cleanup
   tags: 
     - dualedu-docker
   script: 
-    - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" k3s_cleanup.yaml
+    - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" cluster-cleanup.yaml
   when: manual
 
 

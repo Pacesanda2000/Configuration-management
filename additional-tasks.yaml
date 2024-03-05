@@ -1,0 +1,19 @@
+---
+- name: Additional tasks
+  hosts: master1
+  become: yes
+  tasks:
+    - name: Workers labelling on master1 node
+      ansible.builtin.shell: |
+        kubectl label nodes -l '!node-role.kubernetes.io/master' node-role.kubernetes.io/worker=worker
+
+    - name: Nodes status in cluster
+      ansible.builtin.shell: |
+        kubectl get nodes -o wide
+      register: node_status
+
+    - name: Display nodes status
+      ansible.builtin.debug:
+        var: node_status.stdout_lines
+    
+    

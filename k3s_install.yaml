@@ -23,7 +23,7 @@
               --token {{ k3s_token }} \
               --server https://{{ k3s_server_IP }}:6443 \
               --node-taint CriticalAddonsOnly=true:NoExecute 
-      when: "'master_slave' in group_names"
+      when: "'master_slaves' in group_names"
 
 - name: K3S on worker nodes
   hosts: workers

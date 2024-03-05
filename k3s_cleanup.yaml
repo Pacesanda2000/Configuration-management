@@ -1,6 +1,6 @@
 ---
 - name: K3s cleanup 
-  hosts: all_nodes
+  hosts: cluster
   become: yes
   tasks:
     - name: K3s cleanup on master nodes

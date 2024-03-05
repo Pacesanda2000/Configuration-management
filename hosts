@@ -1,22 +1,37 @@
-all_nodes:
-  vars:
-    ansible_user: student
-    ansible_password: Start123
-  children:
-    masters:
-      hosts:
-        master1:
-          ansible_host: 10.207.0.143
-      children:
-        master_slave:
-          hosts:
-            master2:
-              ansible_host: 10.207.0.145
-            master3:
-              ansible_host: 10.207.0.146
-    workers:
-      hosts:
-        worker1:
-          ansible_host: 10.207.0.144
-        worker2:
-          ansible_host: 10.207.0.139
+[cluster:vars]
+ansible_user=student
+ansible_password=Start123
+
+[cluster:children]
+master1
+master_slaves
+worker
+
+[masters:children]
+master1
+master2
+master3
+
+[master_slaves:children]
+master2
+master3
+
+[workers]
+worker1
+worker2
+
+[master1]
+10.207.0.143
+
+[master2]
+10.207.0.145
+
+[master3]
+10.207.0.146
+
+[worker1]
+10.207.0.144
+
+[worker2]
+10.207.0.139
+

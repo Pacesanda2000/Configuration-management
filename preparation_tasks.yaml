@@ -1,6 +1,6 @@
 ---
 - name: Preparation tasks
-  hosts: all_nodes
+  hosts: cluster
   become: yes
   tasks:
     - name: Install updates using yum

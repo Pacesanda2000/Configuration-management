@@ -10,7 +10,7 @@
         rm -rf /root/k3s-installation.sh
       args:
         removes: /usr/local/bin/k3s
-      when: "'master_main' in group_names or 'master_slave' in group_names" 
+      when: "'masters' in group_names" 
 
     - name: K3s cleanup on worker nodes
       shell: |
@@ -19,4 +19,4 @@
         rm -rf /root/k3s-installation.sh
       args:
         removes: /usr/local/bin/k3s
-      when: "'worker' in group_names"
+      when: "'workers' in group_names"

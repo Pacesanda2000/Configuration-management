@@ -1,65 +1,44 @@
 ---
-- name: K3S installation and join cluster 
-  hosts: all_nodes
+- name: K3S on master nodes
+  hosts: masters
   become: yes
   vars_files:
     - vars.yaml
-
   tasks:
-    - name: Create k3s installation script for master_main node
-      ansible.builtin.copy:
-        content: |
-          #!/bin/bash
-          curl -sfL https://get.k3s.io | sh -s - server \
+    - name: K3S installation on initial master node
+      ansible.builtin.shell: |
+        curl -sfL https://get.k3s.io | sh -s - server \
               --token {{ k3s_token }} \
               --node-taint CriticalAddonsOnly=true:NoExecute \
               --cluster-init \
               --write-kubeconfig-mode "0644" \
               --disable servicelb \
               --disable traefik
-          sed -i -e 's/127.0.0.1/{{ k3s_server_IP }}/g' /etc/rancher/k3s/k3s.yaml
-        dest: /root/k3s-installation.sh
-        mode: '0755'
-      when: "'master_main' in group_names"
-
-    - name: Run k3s installation script for master_main node
-      ansible.builtin.shell: /root/k3s-installation.sh
-      when: "'master_main' in group_names"
-
-    - name: Create k3s installation script for worker nodes
-      ansible.builtin.copy:
-        content: |
-          #!/bin/bash
-          curl -sfL https://get.k3s.io | K3S_TOKEN={{ k3s_token }} sh -s - agent --server https://{{ k3s_server_IP }}:6443
-        dest: /root/k3s-installation.sh
-        mode: '0755'
-      when: "'worker' in group_names"
-
-    - name: Create k3s installation script for master_slave nodes
-      ansible.builtin.copy:
-        content: |
-          #!/bin/bash
-          curl -sfL https://get.k3s.io | sh -s - server \
+        sed -i -e 's/127.0.0.1/{{ k3s_server_IP }}/g' /etc/rancher/k3s/k3s.yaml
+      when: "'master1' in group_names"
+      
+    - name: K3S installation and join cluster on master nodes
+      ansible.builtin.shell: |
+        curl -sfL https://get.k3s.io | sh -s - server \
               --token {{ k3s_token }} \
               --server https://{{ k3s_server_IP }}:6443 \
-              --node-taint CriticalAddonsOnly=true:NoExecute \
-        dest: /root/k3s-installation.sh
-        mode: '0755'
+              --node-taint CriticalAddonsOnly=true:NoExecute 
       when: "'master_slave' in group_names"
 
-    - name: Run k3s installation script worker and master_slave nodes
-      ansible.builtin.shell: /root/k3s-installation.sh
-      when: "'worker' in group_names or 'master_slave' in group_names"
+- name: K3S on worker nodes
+  hosts: workers
+  become: yes
+  vars_files:
+    - vars.yaml
+  tasks:
+    - name: K3S installation and join cluster on worker nodes
+      ansible.builtin.shell: |
+        curl -sfL https://get.k3s.io | K3S_TOKEN={{ k3s_token }} sh -s - agent --server https://{{ k3s_server_IP }}:6443
 
-    - name: Display content of k3s.yaml 
-      ansible.builtin.shell: cat /etc/rancher/k3s/k3s.yaml
-      register: k3s_yaml_content
-      when: "'master_main' in group_names"
 
-    - name: Show k3s.yaml content 
-      debug:
-        msg: "{{ k3s_yaml_content }}"
-      when: "'master_main' in group_names"
+
+
+
 
 
 

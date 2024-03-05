@@ -16,6 +16,6 @@ all_nodes:
         worker2:
           ansible_host: 10.207.0.139
 
-[all_nodes:vars]
+all_nodes_vars
 ansible_user=student
 ansible_password=Start123

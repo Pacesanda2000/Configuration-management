@@ -16,7 +16,7 @@
         sed -i -e 's/127.0.0.1/{{ k3s_server_IP }}/g' /etc/rancher/k3s/k3s.yaml
       when: "'master1' in group_names"
       
-    - name: K3S installation and join cluster on master nodes
+    - name: K3S installation and join cluster on further master nodes
       ansible.builtin.shell: |
         curl -sfL https://get.k3s.io | sh -s - server \
               --token {{ k3s_token }} \

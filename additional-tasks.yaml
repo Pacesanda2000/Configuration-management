@@ -30,6 +30,8 @@
       ansible.builtin.get_url:
         url: "https://gitlab.dual.edu/dualedu/2022-2023/sis/dmajoros/ansible/metallb/pool-1.yaml"
         dest: "/root/pool-1.yaml"
+      environment:
+        REQUESTS_CA_BUNDLE: ""
 
     - name: Apply MetalLB pool-1 configuration
       ansible.builtin.shell: kubectl apply -f /root/pool-1.yaml -n metallb-system

@@ -5,7 +5,7 @@ ansible_password=Start123
 [cluster:children]
 master1
 master_slaves
-worker
+workers
 
 [masters:children]
 master1
@@ -16,7 +16,7 @@ master3
 master2
 master3
 
-[workers]
+[workers:children]
 worker1
 worker2
 

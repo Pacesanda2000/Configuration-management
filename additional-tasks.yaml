@@ -27,9 +27,8 @@
       ansible.builtin.shell: kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.9/config/manifests/metallb-native.yaml
 
     - name: Apply MetalLB pool-1 configuration
-      ansible.builtin.shell: kubectl apply -f /metallb/pool-1.yaml -n metallb-system
+      ansible.builtin.shell: kubectl apply -f https://gitlab.dual.edu/dualedu/2022-2023/sis/dmajoros/ansible/metallb/pool-1.yaml -n metallb-system
 
     - name: Apply MetalLB l2advertisement configuration
-      ansible.builtin.shell: kubectl apply -f /metallb/l2advertisement.yaml -n metallb-system
-    
+      ansible.builtin.shell: kubectl apply -f https://gitlab.dual.edu/dualedu/2022-2023/sis/dmajoros/ansible/metallb/l2advertisement.yaml -n metallb-system
     

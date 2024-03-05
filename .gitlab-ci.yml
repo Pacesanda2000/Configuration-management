@@ -19,12 +19,19 @@ ping-nodes:
     - ansible all_nodes -i "$ANSIBLE_LOCAL_PATH/hosts" -m ping
   when: manual
   
+preparation-tasks:
+  stage: build
+  tags: 
+    - dualedu-docker
+  script: 
+    - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" preparation_tasks.yaml
+  when: manual
+
 cluster-setup:
   stage: build
   tags: 
     - dualedu-docker
   script: 
-    - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" preparation-tasks.yaml
     - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" cluster.yaml
     - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" additional-tasks.yaml
   when: manual

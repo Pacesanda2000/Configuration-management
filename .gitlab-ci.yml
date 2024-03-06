@@ -24,7 +24,7 @@ preparation-tasks:
   tags: 
     - dualedu-docker
   script: 
-    - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" preparation_tasks.yaml
+    - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" preparation-tasks.yaml
   when: manual
 
 cluster-setup:

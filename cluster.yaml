@@ -9,6 +9,7 @@
       ansible.builtin.shell: |
         curl -sfL https://get.k3s.io | sh -s - server \
               --token {{ k3s_token }} \
+              --cluster-init \
               --write-kubeconfig-mode "0644" \
               --disable servicelb 
         sed -i -e 's/127.0.0.1/{{ k3s_server_IP }}/g' /etc/rancher/k3s/k3s.yaml

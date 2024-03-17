@@ -28,11 +28,3 @@
     - name: Firewall disabling
       command: systemctl disable firewalld --now
 
-    - name: Swap status
-      shell: swapon -s
-      register: swap_status
-      ignore_errors: yes
-
-    - name: Swap off depend on status
-      command: swapoff /dev/mapper/centos-swap
-      when: "'/dev/mapper/centos-swap' in swap_status.stdout"

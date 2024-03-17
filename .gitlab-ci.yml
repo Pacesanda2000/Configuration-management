@@ -16,7 +16,7 @@ ping-nodes:
   tags: 
     - dualedu-docker
   script:
-    - ansible all_nodes -i "$ANSIBLE_LOCAL_PATH/hosts" -m ping
+    - ansible cluster -i "$ANSIBLE_LOCAL_PATH/hosts" -m ping
   when: manual
   
 preparation-tasks:

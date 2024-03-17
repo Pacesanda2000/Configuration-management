@@ -9,8 +9,6 @@
       ansible.builtin.shell: |
         curl -sfL https://get.k3s.io | sh -s - server \
               --token {{ k3s_token }} \
-#              --node-taint CriticalAddonsOnly=true:NoExecute \
-#              --cluster-init \
               --write-kubeconfig-mode "0644" \
               --disable servicelb 
         sed -i -e 's/127.0.0.1/{{ k3s_server_IP }}/g' /etc/rancher/k3s/k3s.yaml
@@ -21,7 +19,6 @@
         curl -sfL https://get.k3s.io | sh -s - server \
               --token {{ k3s_token }} \
               --server https://{{ k3s_server_IP }}:6443 \
-#              --node-taint CriticalAddonsOnly=true:NoExecute 
       when: "'master_slaves' in group_names"
 
 - name: K3S on worker nodes

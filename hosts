@@ -2,36 +2,36 @@
 ansible_user=student            #meno ansible uzivatela
 ansible_password=Start123       #heslo ansible uzivatela
 
-[cluster:children]              #skupina cluster =>
-master1                         #
+[cluster:children]              #skupinu cluster =>
+master1                         #tvoria tieto skupiny
 master_slaves
 workers
 
-[masters:children]
-master1
+[masters:children]              #skupinu masters =>
+master1                         #tvoria tieto skupiny
 master2
 master3
 
-[master_slaves:children]
-master2
+[master_slaves:children]        #skupinu master_slaves =>
+master2                         #tvoria tieto skupiny
 master3
 
-[workers:children]
-worker1
+[workers:children]              #skupinu workers =>
+worker1                         #tvoria tieto skupiny
 worker2
 
-[master1]
+[master1]           #skupina master1 a IP adresou
 10.207.0.143
 
-[master2]
+[master2]           #skupina master2 a IP adresou
 10.207.0.145
 
-[master3]
+[master3]           #skupina master3 a IP adresou
 10.207.0.146
 
-[worker1]
+[worker1]           #skupina worker1 a IP adresou
 10.207.0.144
 
-[worker2]
+[worker2]           #skupina worker2 a IP adresou
 10.207.0.139
 

@@ -1,9 +1,9 @@
-[cluster:vars]
-ansible_user=student
-ansible_password=Start123
+[cluster:vars]                  #premenne skupiny cluster
+ansible_user=student            #meno ansible uzivatela
+ansible_password=Start123       #heslo ansible uzivatela
 
-[cluster:children]
-master1
+[cluster:children]              #skupina cluster =>
+master1                         #
 master_slaves
 workers
 

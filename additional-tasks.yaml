@@ -1,19 +1,19 @@
 ---
-- name: Additional tasks
-  hosts: master1
-  become: yes
-  environment:
+- name: Additional tasks                      #nazov playbooku
+  hosts: master1                              #
+  become: yes                                 #
+  environment:                                #
     PATH: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:usr/local/bin/kubectl"
-  tasks:
-    - name: Workers labelling on master1 node
+  tasks:                                      #
+    - name: Workers labelling on master1 node #
       shell: kubectl label nodes -l '!node-role.kubernetes.io/master' node-role.kubernetes.io/worker=worker
 
-    - name: Nodes status in cluster
-      shell: kubectl get nodes -o wide
-      register: node_status
+    - name: Nodes status in cluster           #
+      shell: kubectl get nodes -o wide        #
+      register: node_status                   #
 
-    - name: Display nodes status
-      ansible.builtin.debug:
-        var: node_status.stdout_lines
+    - name: Display nodes status              #
+      ansible.builtin.debug:                  #
+        var: node_status.stdout_lines         #
 
     

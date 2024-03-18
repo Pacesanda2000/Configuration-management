@@ -1,14 +1,14 @@
 ---
-- name: Preparation tasks
-  hosts: cluster
-  become: yes
-  tasks:
-    - name: Install updates using yum
+- name: Preparation tasks                               #nazov playbooku
+  hosts: cluster                                        #
+  become: yes                                           #
+  tasks:                                                #ulohy, ktore sa vykonaju
+    - name: Install updates using yum                   #
       yum:
         name: "*"
         state: latest
     
-    - name: Reboot the server if required
+    - name: Reboot the server if required               
       shell: sleep 3; reboot
       ignore_errors: true
       changed_when: false

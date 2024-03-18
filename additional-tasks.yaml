@@ -1,13 +1,13 @@
 ---
 - name: Additional tasks                      #nazov playbooku
-  hosts: master1                              #
+  hosts: master1                              #vykonanie len pre skupinu master1
   become: yes                                 #
   environment:                                #
     PATH: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:usr/local/bin/kubectl"
   tasks:                                      #
     - name: Workers labelling on master1 node #
       shell: kubectl label nodes -l '!node-role.kubernetes.io/master' node-role.kubernetes.io/worker=worker
-
+                                              #
     - name: Nodes status in cluster           #
       shell: kubectl get nodes -o wide        #
       register: node_status                   #

@@ -20,18 +20,18 @@ master3
 worker1                         #tvoria tieto skupiny
 worker2
 
-[master1]           #skupina master1 a IP adresou
+[master1]           #skupina master1 s IP adresou
 10.207.0.143
 
-[master2]           #skupina master2 a IP adresou
+[master2]           #skupina master2 s IP adresou
 10.207.0.145
 
-[master3]           #skupina master3 a IP adresou
+[master3]           #skupina master3 s IP adresou
 10.207.0.146
 
-[worker1]           #skupina worker1 a IP adresou
+[worker1]           #skupina worker1 s IP adresou
 10.207.0.144
 
-[worker2]           #skupina worker2 a IP adresou
+[worker2]           #skupina worker2 s IP adresou
 10.207.0.139
 

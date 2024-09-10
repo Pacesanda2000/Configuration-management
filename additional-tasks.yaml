@@ -1,0 +1,17 @@
+---
+- name: Additional tasks                      #nazov playbooku
+  hosts: master1                              #vykonanie len pre skupinu master1 v hosts
+  become: yes                                 #vykonavanie s opravneniami superuzivatela
+  environment:                                #spustenie binarky 'kubectl'
+    PATH: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:usr/local/bin/kubectl"
+  tasks:                                      #ulohy, ktore sa vykonaju
+    - name: Workers labelling on master1 node #pridanie role 'worker' pre nody worker1 a worker2
+      shell: kubectl label nodes -l '!node-role.kubernetes.io/master' node-role.kubernetes.io/worker=worker
+
+    - name: Nodes status in cluster           #vylistovanie stavu clastra a ulozenie =>
+      shell: kubectl get nodes -o wide        #premennej pre dalsiu ulohu
+      register: node_status
+
+    - name: Display nodes status              #znazornenie premennej z predoslej ulohy
+      ansible.builtin.debug:                  #pomocou ansible builtin metody
+        var: node_status.stdout_lines

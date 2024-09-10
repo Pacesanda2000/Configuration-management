@@ -1,0 +1,35 @@
+---
+- name: K3S on master nodes       #nazov playbooku
+  hosts: masters                  #vykonanie len pre skupinu masters v hosts
+  become: yes                     #vykonavanie s opravneniami superuzivatela
+  vars_files:                     #pouzitie premennych zo suboru 'vars.yaml'
+    - vars.yaml
+  tasks:                          #ulohy, ktore sa vykonaju
+    - name: K3S installation on initial master node   #instalacia K3S a vytvorenie clustra na inicializacnom node
+      ansible.builtin.shell: |
+        curl -sfL https://get.k3s.io | sh -s - server \
+              --token {{ k3s_token }} \
+              --cluster-init \
+              --node-taint CriticalAddonsOnly=true:NoExecute \
+              --write-kubeconfig-mode "0644" \
+              --disable servicelb
+        sed -i -e 's/127.0.0.1/{{ k3s_server_IP }}/g' /etc/rancher/k3s/k3s.yaml
+      when: "'master1' in group_names"                #vykonanie ulohy len pre skupinu 'master1'
+
+    - name: K3S installation and join cluster on further master nodes   #instalacia K3S a pridanie do clustra =>
+      ansible.builtin.shell: |    #pomocou premennych definovanych v subore 'vars.yaml'
+        curl -sfL https://get.k3s.io | sh -s - server \
+              --token {{ k3s_token }} \
+              --server https://{{ k3s_server_IP }}:6443 \
+              --node-taint CriticalAddonsOnly=true:NoExecute \
+      when: "'master_slaves' in group_names"          #vykonanie ulohy len pre skupinu 'master_slaves'
+
+- name: K3S on worker nodes       #nazov playbooku
+  hosts: workers                  #vykonanie len pre skupinu workers v hosts
+  become: yes                     #vykonavanie s opravneniami superuzivatela
+  vars_files:                     #pouzitie premennych zo suboru 'vars.yaml'
+    - vars.yaml
+  tasks:                          #ulohy, ktore sa vykonaju
+    - name: K3S installation and join cluster on worker nodes   #instalacia K3S a pridanie do clustra =>
+      ansible.builtin.shell: |    #pomocou premennych definovanych v subore 'vars.yaml'
+        curl -sfL https://get.k3s.io | K3S_TOKEN={{ k3s_token }} sh -s - agent --server https://{{ k3s_server_IP }}:6443

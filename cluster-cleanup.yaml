@@ -1,0 +1,20 @@
+---
+- name: K3s cleanup                               #nazov playbooku
+  hosts: cluster                                  #vykonanie len pre skupinu cluster v hosts
+  become: yes                                     #vykonavanie s opravneniami superuzivatela
+  tasks:                                          #ulohy, ktore sa vykonaju
+    - name: K3s cleanup on master nodes           #znicenie vsetkych beziacich instancii =>
+      shell: |                                    #a procesov pomocou skriptov
+        /usr/local/bin/k3s-killall.sh
+        /usr/local/bin/k3s-uninstall.sh
+      args:
+        removes: /usr/local/bin/k3s               #odstranenie adresara k3s
+      when: "'masters' in group_names"            #vykonanie ulohy len pre skupinu 'masters'
+
+    - name: K3s cleanup on worker nodes           #znicenie vsetkych beziacich instancii =>
+      shell: |                                    #a procesov pomocou skriptov
+        /usr/local/bin/k3s-killall.sh
+        /usr/local/bin/k3s-agent-uninstall.sh
+      args:
+        removes: /usr/local/bin/k3s               #odstranenie adresara k3s
+      when: "'workers' in group_names"            #vykonanie ulohy len pre skupinu 'workers'

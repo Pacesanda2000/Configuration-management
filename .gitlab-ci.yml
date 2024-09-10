@@ -1,0 +1,45 @@
+stages:
+  - test
+  - build
+  - cleanup
+
+variables:
+  ANSIBLE_LOCAL_PATH: /home/gitlab-runner/builds/zvN3A5z1/0/dualedu/2022-2023/sis/dmajoros/ansible
+
+before_script:
+  - sudo yum update -y
+  - sudo yum install -y ansible
+  - ansible --version
+
+ping-nodes:
+  stage: test
+  tags:
+    - dualedu-docker
+  script:
+    - ansible cluster -i "$ANSIBLE_LOCAL_PATH/hosts" -m ping
+  when: manual
+
+preparation-tasks:
+  stage: build
+  tags:
+    - dualedu-docker
+  script:
+    - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" preparation-tasks.yaml
+  when: manual
+
+cluster-setup:
+  stage: build
+  tags:
+    - dualedu-docker
+  script:
+    - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" cluster.yaml
+    - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" additional-tasks.yaml
+  when: manual
+
+cluster-cleanup:
+  stage: cleanup
+  tags:
+    - dualedu-docker
+  script:
+    - ansible-playbook -i "$ANSIBLE_LOCAL_PATH/hosts" cluster-cleanup.yaml
+  when: manual

@@ -1,0 +1,28 @@
+---
+- name: Preparation tasks                               #nazov playbooku
+  hosts: cluster                                        #vykonanie len pre skupinu master1 v hosts
+  become: yes                                           #vykonavanie s opravneniami superuzivatela
+  tasks:                                                #ulohy, ktore sa vykonaju
+    - name: Install updates using yum                   #aktualizovanie vsetkych balickov =>
+      yum:                                              #metodou yum do stavu latest
+        name: "*"
+        state: latest
+
+    - name: Reboot the server if required               #reboot modul po aktualizacii balickov
+      shell: sleep 3; reboot
+      changed_when: false
+      async: 1
+      poll: 0
+
+    - name: Wait for server to come back after reboot   #cakanie na obnovenie spojenia po reboote
+      wait_for_connection:
+        timeout: 120                                    #urcuje casovy limit pre cakanie
+        delay: 20                                       #casovy interval medzi pokusmi o pripojenie
+      register: reboot_result                           #uklada vysledok v sekundach pre dalsiu ulohu
+
+    - name: Reboot time                                 #vypisanie hlasky pouzitim premennej z =>
+      debug:                                            #predoslej ulohy
+        msg: "The system rebooted in {{ reboot_result.elapsed }} seconds."
+
+    - name: Firewall disabling                          #okamzite vypnutie firewallu pomocou
+      command: systemctl disable firewalld --now
